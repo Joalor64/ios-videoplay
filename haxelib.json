@@ -1,0 +1,18 @@
+{
+  "name": "ios-videoplay",
+  "url": "https://github.com/Joalor64/ios-videoplay",
+  "license": "MIT",
+  "tags": [
+    "ios",
+    "haxeflixel",
+    "haxe",
+    "video"
+  ],
+  "description": "A simple haxelib for video playback on iOS HaxeFlixel.",
+  "version": "1.0.0",
+  "releasenote": "Initial release",
+  "contributors": [
+    "Joalor64"
+  ],
+  "dependencies": {}
+}
