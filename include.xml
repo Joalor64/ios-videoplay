@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension>
+    <files id="__main__">
+        <compilerflag name="-I" value="source/native" />
+    </files>
+    
 	<section if="ios">
         <dependency name="AVFoundation.framework" />
         <dependency name="AVKit.framework" />
     
-        <compilerflag name="-I" value="source/native" />
         <file name="source/native/IOSVideo.mm" />
     </section>
 </extension>
