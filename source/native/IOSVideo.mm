@@ -4,11 +4,33 @@
 @implementation IOSVideoPlayer
 
 static AVPlayerViewController *videoController = nil;
+static BOOL videoFinished = NO;
+
++ (UIViewController *)rootViewController {
+    for (UIScene *scene in [UIApplication sharedApplication].connectedScenes) {
+        if (scene.activationState == UISceneActivationStateForegroundActive &&
+            [scene isKindOfClass:[UIWindowScene class]]) {
+            for (UIWindow *window in ((UIWindowScene *)scene).windows) {
+                if (window.isKeyWindow) return window.rootViewController;
+            }
+        }
+    }
+    return nil;
+}
 
 + (void)playVideo:(NSString *)videoPath {
     dispatch_async(dispatch_get_main_queue(), ^{
-        UIViewController *rootVC = [UIApplication sharedApplication].keyWindow.rootViewController;
+        UIViewController *rootVC = [self rootViewController];
         if (!rootVC) return;
+
+        if (videoController != nil) {
+            [[NSNotificationCenter defaultCenter] removeObserver:self];
+            [videoController.player pause];
+            [videoController dismissViewControllerAnimated:NO completion:nil];
+            videoController = nil;
+        }
+
+        videoFinished = NO;
 
         NSURL *url;
         if ([videoPath hasPrefix:@"http"]) {
@@ -34,6 +56,7 @@ static AVPlayerViewController *videoController = nil;
 }
 
 + (void)videoDidFinish:(NSNotification *)notification {
+    videoFinished = YES;
     [self stopVideo];
 }
 
@@ -49,6 +72,10 @@ static AVPlayerViewController *videoController = nil;
     });
 }
 
++ (BOOL)hasFinished {
+    return videoFinished;
+}
+
 @end
 
 extern "C" {
@@ -57,5 +84,8 @@ extern "C" {
     }
     void ios_stop_video() {
         [IOSVideoPlayer stopVideo];
+    }
+    bool ios_video_has_finished() {
+        return [IOSVideoPlayer hasFinished];
     }
 }

@@ -8,6 +8,7 @@
 
 + (void)playVideo:(NSString *)videoPath;
 + (void)stopVideo;
++ (BOOL)hasFinished;
 
 @end
 
