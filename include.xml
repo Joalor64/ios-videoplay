@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension>
-    <files id="__main__">
+    <files id="haxe">
+        <file name="source/iosvideo/IOSVideo.hx" />
         <compilerflag name="-I" value="source/native" />
     </files>
-    
+
 	<section if="ios">
         <dependency name="AVFoundation.framework" />
         <dependency name="AVKit.framework" />
