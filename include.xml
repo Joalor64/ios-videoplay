@@ -4,7 +4,7 @@
         <dependency name="AVFoundation.framework" />
         <dependency name="AVKit.framework" />
     
-        <compilerflag value="-Isource/native" />
+        <compilerflag name="-Isource/native" />
         <file name="source/native/IOSVideo.mm" />
     </section>
 </extension>
