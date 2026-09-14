@@ -36,7 +36,24 @@ static BOOL videoFinished = NO;
         if ([videoPath hasPrefix:@"http"]) {
             url = [NSURL URLWithString:videoPath];
         } else {
-            url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:videoPath ofType:nil]];
+            NSString *directory = [videoPath stringByDeletingLastPathComponent];
+            NSString *fileName = [[videoPath lastPathComponent] stringByDeletingPathExtension];
+            NSString *extension = [videoPath pathExtension];
+
+            NSString *resolvedPath = [[NSBundle mainBundle] pathForResource:fileName
+                                                                       ofType:extension
+                                                                  inDirectory:directory];
+
+            if (resolvedPath == nil) {
+                resolvedPath = [[NSBundle mainBundle] pathForResource:fileName ofType:extension];
+            }
+
+            if (resolvedPath == nil) {
+                NSLog(@"[IOSVideo] Could not locate video resource '%@' (looked in directory '%@'). Skipping playback to avoid a crash.", videoPath, directory);
+                return;
+            }
+
+            url = [NSURL fileURLWithPath:resolvedPath];
         }
 
         AVPlayer *player = [AVPlayer playerWithURL:url];
