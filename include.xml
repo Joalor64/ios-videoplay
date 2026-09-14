@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension>
-    <section id="ios">
+    <files id="ios">
         <compilerflag name="-Iinclude" />
         <file name="source/native/IOSVideo.mm" />
-    </section>
+    </files>
 
 	<section if="ios">
         <dependency name="AVFoundation.framework" />
