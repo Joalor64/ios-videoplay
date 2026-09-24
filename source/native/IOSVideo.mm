@@ -1,4 +1,4 @@
-#import "IOSVideo.h"
+#import "../source/iosvideo/IOSVideo.h"
 #import <UIKit/UIKit.h>
 
 @implementation IOSVideoPlayer

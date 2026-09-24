@@ -16,7 +16,7 @@ extern class IOSVideoNative
 }
 #end
 
-@:cppInclude("IOSVideo.h")
+@:cppInclude("./IOSVideo.h")
 class IOSVideo
 {
 	#if ios
