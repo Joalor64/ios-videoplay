@@ -1,21 +1,5 @@
 package iosvideo;
 
-#if ios
-import cpp.ConstCharStar;
-
-extern class IOSVideoNative
-{
-	@:native("ios_play_video")
-	static function play(path:ConstCharStar):Void;
-
-	@:native("ios_stop_video")
-	static function stop():Void;
-
-	@:native("ios_video_has_finished")
-	static function hasFinished():Bool;
-}
-#end
-
 @:cppFileCode('
 extern "C" {
     void ios_play_video(const char* path);
@@ -35,7 +19,7 @@ class IOSVideo
 	{
 		#if ios
 		stopPolling();
-		IOSVideoNative.play(path);
+		untyped __cpp__("ios_play_video({0}.utf8_str())", path);
 		startPolling();
 		#else
 		trace("Video playback only implemented for iOS target.");
@@ -46,7 +30,7 @@ class IOSVideo
 	{
 		#if ios
 		stopPolling();
-		IOSVideoNative.stop();
+		untyped __cpp__("ios_stop_video()");
 		#end
 	}
 
@@ -56,7 +40,7 @@ class IOSVideo
 		pollTimer = new haxe.Timer(100);
 		pollTimer.run = function()
 		{
-			if (IOSVideoNative.hasFinished())
+			if (untyped __cpp__("ios_video_has_finished()"))
 			{
 				stopPolling();
 
