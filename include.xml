@@ -6,8 +6,8 @@
         <dependency name="UIKit.framework" />
 
         <files id="hxcpp">
-            <compilerflag value="-I${xml:front}/source/iosvideo" />
-            <file name="${xml:front}/native/IOSVideo.mm" tags="objc,mm" />
+            <compilerflag value="-I${xml:front}source/iosvideo" />
+            <file name="${xml:front}native/IOSVideo.mm" tags="objc,mm" />
         </files>
     </section>
 

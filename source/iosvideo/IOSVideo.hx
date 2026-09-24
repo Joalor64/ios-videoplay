@@ -16,13 +16,8 @@ extern class IOSVideoNative
 }
 #end
 
-@:buildXml('
-<target id="hxcpp" section="hxcpp">
-    <compilerflag value="-I${xml:front}/source/iosvideo" />
-</target>
-')
-@:cppFileCode('
-#include "IOSVideo.h"
+@:headerCode('
+#include "../../source/iosvideo/IOSVideo.h"
 ')
 class IOSVideo
 {
