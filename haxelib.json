@@ -10,6 +10,7 @@
   ],
   "description": "A simple haxelib for video playback on iOS HaxeFlixel.",
   "version": "1.0.0",
+  "classPath": "source/",
   "releasenote": "Initial release",
   "contributors": [
     "Joalor64"

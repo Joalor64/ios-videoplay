@@ -1,63 +1,81 @@
 package iosvideo;
 
 #if ios
-import cpp.Lib;
+import cpp.ConstCharStar;
+
+@:buildXml('
+<files id="__main__">
+	<compilerflag name="-I${haxelib:ios-videoplay}/source/native" />
+	<compilerflag name="-fobjc-arc" />
+	<file name="${haxelib:ios-videoplay}/source/native/IOSVideo.mm">
+		<depend name="${haxelib:ios-videoplay}/source/native/IOSVideo.h" />
+	</file>
+</files>
+')
+@:include("IOSVideo.h")
+extern class IOSVideoNative
+{
+	@:native("ios_play_video")
+	static function play(path:ConstCharStar):Void;
+
+	@:native("ios_stop_video")
+	static function stop():Void;
+
+	@:native("ios_video_has_finished")
+	static function hasFinished():Bool;
+}
 #end
 
 class IOSVideo
 {
-    #if ios
-    static var ios_play_video = Lib.load("haxeApp", "ios_play_video", 1);
-    static var ios_stop_video = Lib.load("haxeApp", "ios_stop_video", 0);
-    static var ios_video_has_finished = Lib.load("haxeApp", "ios_video_has_finished", 0);
+	#if ios
+	static var pollTimer:haxe.Timer;
+	#end
 
-    static var pollTimer:haxe.Timer;
-    #end
+	public static var onComplete:Void->Void = null;
 
-    public static var onComplete:Void->Void = null;
+	public static function play(path:String):Void
+	{
+		#if ios
+		stopPolling();
+		IOSVideoNative.play(path);
+		startPolling();
+		#else
+		trace("Video playback only implemented for iOS target.");
+		#end
+	}
 
-    public static function play(path:String):Void
-    {
-        #if ios
-        stopPolling();
-        ios_play_video(path);
-        startPolling();
-        #else
-        trace("Video playback only implemented for iOS target.");
-        #end
-    }
+	public static function stop():Void
+	{
+		#if ios
+		stopPolling();
+		IOSVideoNative.stop();
+		#end
+	}
 
-    public static function stop():Void
-    {
-        #if ios
-        stopPolling();
-        ios_stop_video();
-        #end
-    }
+	#if ios
+	static function startPolling():Void
+	{
+		pollTimer = new haxe.Timer(100);
+		pollTimer.run = function()
+		{
+			if (IOSVideoNative.hasFinished())
+			{
+				stopPolling();
 
-    #if ios
-    static function startPolling():Void
-    {
-        pollTimer = new haxe.Timer(100);
-        pollTimer.run = function()
-        {
-            if (ios_video_has_finished())
-            {
-                stopPolling();
+				if (onComplete != null)
+					onComplete();
+			}
+		};
+	}
 
-                if (onComplete != null)
-                    onComplete();
-            }
-        };
-    }
-
-    static function stopPolling():Void
-    {
-        if (pollTimer != null)
-        {
-            pollTimer.stop();
-            pollTimer = null;
-        }
-    }
-    #end
+	static function stopPolling():Void
+	{
+		if (pollTimer != null)
+		{
+			pollTimer.stop();
+			pollTimer = null;
+		}
+	}
+	#end
 }
