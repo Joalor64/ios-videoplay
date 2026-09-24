@@ -7,7 +7,7 @@
 
         <files id="hxcpp">
             <compilerflag value="-I${haxelib:ios-videoplay}/source/iosvideo" />
-            <file name="${haxelib:ios-videoplay}/native/IOSVideo.mm" />
+            <file name="${haxelib:ios-videoplay}/native/IOSVideo.mm" tags="objc,mm" />
         </files>
 
         <target id="hxcpp" section="hxcpp" />
