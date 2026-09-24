@@ -4,11 +4,13 @@
         <dependency name="AVFoundation.framework" />
         <dependency name="AVKit.framework" />
         <dependency name="UIKit.framework" />
-        
-        <files id="__main__">
+
+        <files id="hxcpp">
             <compilerflag value="-I${haxelib:ios-videoplay}/source/iosvideo" />
             <file name="${haxelib:ios-videoplay}/native/IOSVideo.mm" />
         </files>
+
+        <target id="hxcpp" section="hxcpp" />
     </section>
 
     <source path="source" />
