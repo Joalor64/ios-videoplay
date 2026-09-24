@@ -4,6 +4,15 @@
         <dependency name="AVFoundation.framework" />
         <dependency name="AVKit.framework" />
         <dependency name="UIKit.framework" />
+
+        <files id="hxcpp">
+            <compilerflag value="-I${this_dir}/native" />
+            <file name="${this_dir}/native/IOSVideo.mm" tags="objc,mm" />
+        </files>
+
+        <target id="hxcpp" section="hxcpp">
+            <files id="hxcpp" />
+        </target>
     </section>
 
     <source path="source" />
