@@ -17,11 +17,8 @@ extern class IOSVideoNative
 #end
 
 @:buildXml('
-<target id="hxcpp">
-    <files id="hxcpp">
-        <compilerflag value="-I${haxelib:ios-videoplay}/source/iosvideo" />
-        <file name="${haxelib:ios-videoplay}/native/IOSVideo.mm" tags="objc,mm" />
-    </files>
+<target id="hxcpp" section="hxcpp">
+    <compilerflag value="-I${xml:front}/source/iosvideo" />
 </target>
 ')
 @:cppFileCode('
