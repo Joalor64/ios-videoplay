@@ -4,7 +4,9 @@
 		<dependency name="AVFoundation.framework" />
 		<dependency name="AVKit.framework" />
 		
-		<include path="${haxelib:ios-videoplay}/native" />
+		<target id="haxe">
+			<cppflag name="-I" value="${haxelib:ios-videoplay}/native" />
+		</target>
 		
 		<files id="__main__">
 			<file name="${haxelib:ios-videoplay}/native/IOSVideo.mm" />
