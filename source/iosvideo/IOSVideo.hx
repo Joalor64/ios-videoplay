@@ -1,5 +1,12 @@
 package iosvideo;
 
+@:buildXml('
+<target id="hxcpp" section="hxcpp">
+    <files id="hxcpp">
+        <file name="${xml:front}native/IOSVideo.mm" tags="objc,mm" />
+    </files>
+</target>
+')
 @:cppFileCode('
 extern "C" {
     void ios_play_video(const char* path);

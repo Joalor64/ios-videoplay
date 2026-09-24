@@ -4,14 +4,6 @@
         <dependency name="AVFoundation.framework" />
         <dependency name="AVKit.framework" />
         <dependency name="UIKit.framework" />
-
-        <files id="hxcpp">
-            <file name="${xml:front}native/IOSVideo.mm" tags="objc,mm" />
-        </files>
-
-        <target id="hxcpp" section="hxcpp">
-            <files id="hxcpp" />
-        </target>
     </section>
 
     <source path="source" />
