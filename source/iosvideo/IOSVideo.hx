@@ -16,7 +16,17 @@ extern class IOSVideoNative
 }
 #end
 
-@:cppInclude("./IOSVideo.h")
+@:buildXml('
+<target id="hxcpp">
+    <files id="hxcpp">
+        <compilerflag value="-I${haxelib:ios-videoplay}/source/iosvideo" />
+        <file name="${haxelib:ios-videoplay}/native/IOSVideo.mm" tags="objc,mm" />
+    </files>
+</target>
+')
+@:cppFileCode('
+#include "IOSVideo.h"
+')
 class IOSVideo
 {
 	#if ios

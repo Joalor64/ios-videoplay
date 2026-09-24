@@ -1,4 +1,4 @@
-#import "../source/iosvideo/IOSVideo.h"
+#import "IOSVideo.h"
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import <AVKit/AVKit.h>
