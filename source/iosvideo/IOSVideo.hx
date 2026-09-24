@@ -3,6 +3,7 @@ package iosvideo;
 #if ios
 import cpp.ConstCharStar;
 
+@:buildXml('<target id="haxe"><compilerflag value="-I${haxelib:ios-videoplay}/native"/></target>')
 @:include("IOSVideo.h")
 extern class IOSVideoNative
 {
