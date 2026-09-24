@@ -1,5 +1,13 @@
 #import "../source/iosvideo/IOSVideo.h"
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <AVKit/AVKit.h>
+
+@interface IOSVideoPlayer : NSObject
++ (void)playVideo:(NSString *)videoPath;
++ (void)stopVideo;
++ (BOOL)hasFinished;
+@end
 
 @implementation IOSVideoPlayer
 
