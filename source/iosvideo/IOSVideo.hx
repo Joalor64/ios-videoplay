@@ -5,8 +5,8 @@ import cpp.ConstCharStar;
 
 @:buildXml('
 <files id="__main__">
-	<compilerflag name="-I${haxelib:ios-videoplay}/source/native" />
-	<compilerflag name="-fobjc-arc" />
+	<compilerflag value="-I${haxelib:ios-videoplay}/source/native" />
+	<compilerflag value="-fobjc-arc" />
 	<file name="${haxelib:ios-videoplay}/source/native/IOSVideo.mm">
 		<depend name="${haxelib:ios-videoplay}/source/native/IOSVideo.h" />
 	</file>
