@@ -1,6 +1,11 @@
 package iosvideo;
 
 #if ios
+@:buildXml('
+<target id="hxcpp" section="hxcpp">
+    <compilerflag value="-objc"/>
+</target>
+')
 @:cppFileCode('
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
