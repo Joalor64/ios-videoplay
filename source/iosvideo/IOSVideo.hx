@@ -16,8 +16,12 @@ extern class IOSVideoNative
 }
 #end
 
-@:headerCode('
-#include "../../source/iosvideo/IOSVideo.h"
+@:cppFileCode('
+extern "C" {
+    void ios_play_video(const char* path);
+    void ios_stop_video(void);
+    bool ios_video_has_finished(void);
+}
 ')
 class IOSVideo
 {
