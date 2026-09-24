@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension>
-	<section if="ios">
-		<dependency name="AVFoundation.framework" />
-		<dependency name="AVKit.framework" />
-		
-		<files id="__main__">
-			<file name="${haxelib:ios-videoplay}/native/IOSVideo.mm" />
-		</files>
-	</section>
+    <section if="ios">
+        <dependency name="AVFoundation.framework" />
+        <dependency name="AVKit.framework" />
+        <dependency name="UIKit.framework" />
+        
+        <files id="__main__">
+            <compilerflag value="-I${haxelib:ios-videoplay}/source/iosvideo" />
+            <file name="${haxelib:ios-videoplay}/native/IOSVideo.mm" />
+        </files>
+    </section>
 
-	<source path="source" />
+    <source path="source" />
 </extension>
