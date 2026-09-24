@@ -115,10 +115,13 @@ class IOSVideo
 	{
 		#if ios
 		stopPolling();
-		var resolvedPath:String = path;
-		var assetPath:String = lime.utils.Assets.getPath(path);
-		if (assetPath != null)
-			resolvedPath = assetPath;
+
+		var resolvedPath:String = resolvePath(path);
+		if (resolvedPath == null)
+		{
+			trace('IOSVideo: could not resolve a playable path for "$path"');
+			return;
+		}
 
 		untyped __cpp__("ios_play_video({0}.utf8_str())", resolvedPath);
 		startPolling();
@@ -126,6 +129,33 @@ class IOSVideo
 		trace("Video playback only implemented for iOS target.");
 		#end
 	}
+
+	#if ios
+	static function resolvePath(path:String):String
+	{
+		if (path == null)
+			return null;
+
+		if (StringTools.startsWith(path, "http"))
+			return path;
+
+		var destination = haxe.io.Path.join([lime.system.System.applicationStorageDirectory, haxe.io.Path.withoutDirectory(path)]);
+
+		if (!sys.FileSystem.exists(destination))
+		{
+			var bytes = lime.utils.Assets.getBytes(path);
+			if (bytes == null)
+			{
+				trace('IOSVideo: no asset found for "$path"');
+				return null;
+			}
+
+			sys.io.File.saveBytes(destination, bytes);
+		}
+
+		return destination;
+	}
+	#end
 
 	public static function stop():Void
 	{
