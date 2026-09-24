@@ -3,7 +3,7 @@ package iosvideo;
 #if ios
 import cpp.ConstCharStar;
 
-@:headerInclude("../../../native/IOSVideo.h")
+@:cppInclude("../../../native/IOSVideo.h")
 extern class IOSVideoNative
 {
 	@:native("ios_play_video")
