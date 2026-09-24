@@ -15,5 +15,7 @@
   "contributors": [
     "Joalor64"
   ],
-  "dependencies": {}
+  "dependencies": {
+    "lime": ""
+  }
 }
