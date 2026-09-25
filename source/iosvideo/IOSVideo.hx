@@ -1,5 +1,16 @@
 package iosvideo;
 
+import haxe.io.Path;
+import haxe.Timer;
+import sys.io.File;
+import sys.FileSystem;
+import lime.utils.Assets;
+import lime.system.System;
+
+/**
+ * A simple video player extension for iOS.
+ * @author Joalor64
+ */
 #if ios
 @:cppFileCode('
 #import <UIKit/UIKit.h>
@@ -130,11 +141,18 @@ extern "C" {
 class IOSVideo
 {
 	#if ios
-	static var pollTimer:haxe.Timer;
+	static var pollTimer:Timer;
 	#end
 
+	/**
+	 * Callback function for when the video playback is completed.
+	 */
 	public static var onComplete:Void->Void = null;
 
+	/**
+	 * Plays a video from a specified path.
+	 * @param path The path to the video file, if it exists.
+	 */
 	public static function play(path:String):Void
 	{
 		#if ios
@@ -154,33 +172,38 @@ class IOSVideo
 		#end
 	}
 
+	/**
+	 * Resolves the video path.
+	 * @param path The original path to the video file.
+	 * @return String The resolved path to the video file, which can be used for playback.
+	 */
 	#if ios
 	static function resolvePath(path:String):String
 	{
 		if (path == null)
 			return null;
 
-		if (StringTools.startsWith(path, "http"))
-			return path;
+		var destination = Path.join([System.applicationStorageDirectory, Path.withoutDirectory(path)]);
 
-		var destination = haxe.io.Path.join([lime.system.System.applicationStorageDirectory, haxe.io.Path.withoutDirectory(path)]);
-
-		if (!sys.FileSystem.exists(destination))
+		if (FileSystem.exists(destination))
 		{
-			var bytes = lime.utils.Assets.getBytes(path);
+			var bytes = Assets.getBytes(path);
 			if (bytes == null)
 			{
 				trace('IOSVideo: no asset found for "$path"');
 				return null;
 			}
 
-			sys.io.File.saveBytes(destination, bytes);
+			File.saveBytes(destination, bytes);
 		}
 
 		return destination;
 	}
 	#end
 
+	/**
+	 * Stops the video playback.
+	 */
 	public static function stop():Void
 	{
 		#if ios
@@ -192,7 +215,7 @@ class IOSVideo
 	#if ios
 	static function startPolling():Void
 	{
-		pollTimer = new haxe.Timer(100);
+		pollTimer = new Timer(100);
 		pollTimer.run = function()
 		{
 			if (untyped __cpp__("ios_video_has_finished()"))
