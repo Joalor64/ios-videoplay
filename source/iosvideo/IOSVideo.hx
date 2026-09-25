@@ -13,6 +13,21 @@ package iosvideo;
 + (void)playerItemDidReachEnd:(NSNotification *)notification;
 @end
 
+@interface IOSVideoPlayerViewController : AVPlayerViewController
+@end
+
+@implementation IOSVideoPlayerViewController
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskLandscape;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationLandscapeRight;
+}
+
+@end
+
 static AVPlayerViewController *g_playerViewController = nil;
 static BOOL g_videoFinished = NO;
 
@@ -46,9 +61,9 @@ static BOOL g_videoFinished = NO;
         }
 
         AVPlayer *player = [AVPlayer playerWithURL:url];
-        g_playerViewController = [[AVPlayerViewController alloc] init];
+        g_playerViewController = [[IOSVideoPlayerViewController alloc] init];
         g_playerViewController.player = player;
-        g_playerViewController.showsPlaybackControls = YES;
+        g_playerViewController.showsPlaybackControls = NO;
 
         g_videoFinished = NO;
 
