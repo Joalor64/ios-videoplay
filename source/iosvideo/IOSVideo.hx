@@ -80,9 +80,18 @@ static BOOL g_videoFinished = NO;
 
 + (void)playerItemDidReachEnd:(NSNotification *)notification {
     g_videoFinished = YES;
+
     [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:AVPlayerItemDidPlayToEndTimeNotification
-                                                  object:nil];
+                                                     name:AVPlayerItemDidPlayToEndTimeNotification
+                                                   object:nil];
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (g_playerViewController != nil) {
+            [g_playerViewController.player pause];
+            [g_playerViewController dismissViewControllerAnimated:NO completion:nil];
+            g_playerViewController = nil;
+        }
+    });
 }
 
 + (void)stopVideo {
